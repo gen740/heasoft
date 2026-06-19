@@ -34,7 +34,9 @@ _: {
               name = "merged-xlibs";
               paths = with pkgs; [
                 libX11.dev
+                libX11
                 libXt.dev
+                libXt
               ];
             };
 
@@ -109,8 +111,8 @@ _: {
               export FC=${pkgs.gfortran}/bin/gfortran
               export FCFLAGS="$FCFLAGS -O2 -w"
               export CFLAGS="$CFLAGS -O2 -I${pkgs.xorgproto}/include -w"
-              export CXXFLAGS="$CXXFLAGS -O2 -std=c++14 -w"
-              export LDFLAGS="$LDFLAGS -L${pkgs.libX11}/lib -L${lib.getLib pkgs.gfortran.cc}/lib -lgfortran -L${pkgs.openblas}/lib -lcblas"
+              export CXXFLAGS="$CXXFLAGS -O2 -std=c++14 -L${pkgs.libX11}/lib -w"
+              export LDFLAGS="$LDFLAGS -L${mergedXlibs}/lib -L${lib.getLib pkgs.gfortran.cc}/lib -lgfortran -L${pkgs.openblas}/lib -lcblas"
               unset MACOSX_DEPLOYMENT_TARGET
               cd BUILD_DIR
             '';
@@ -145,6 +147,7 @@ _: {
             '';
             configureFlags = [
               "--x-includes=${mergedXlibs}/include"
+              "--x-libraries=${mergedXlibs}/lib"
             ];
             preFixup = ''
               while IFS= read -r -d "" file; do
