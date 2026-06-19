@@ -1,0 +1,58 @@
+MIT License
+
+Copyright (c) 2026 gen740
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+SCOPE OF THIS LICENSE / NOTICE ON THIRD-PARTY SOFTWARE
+================================================================================
+
+The MIT License above applies ONLY to the original content of this repository,
+i.e. the Nix packaging expressions, flake definitions, setup hooks, patches,
+and related build/configuration files authored here (the "Packaging Code").
+
+The Packaging Code does NOT include, bundle, or redistribute any of the
+scientific software that it builds. Instead, at build time it downloads that
+software directly from its official upstream servers. The downloaded software
+is the property of its respective authors/owners and is governed by its own
+license and terms of use, NOT by the MIT License above. In particular:
+
+  * HEASoft
+      Provided by NASA's HEASARC (NASA/GSFC).
+      Downloaded from: https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/
+      License & terms:  https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/
+
+  * CALDB (Calibration Database) setup files
+      Provided by NASA's HEASARC (NASA/GSFC).
+      Downloaded from: https://heasarc.gsfc.nasa.gov/FTP/caldb/
+      License & terms:  https://heasarc.gsfc.nasa.gov/docs/heasarc/caldb/
+
+  * XMM-Newton SAS (Science Analysis System)
+      Provided by ESA / the XMM-Newton Science Operations Centre.
+      Downloaded from: https://heasarc.gsfc.nasa.gov/FTP/xmm/software/sas/
+      License & terms:  https://www.cosmos.esa.int/web/xmm-newton/sas
+
+By using the Packaging Code to build or install any of the above, you are
+obtaining that software from its upstream distributor and you are responsible
+for reviewing and complying with the corresponding upstream license and terms
+of use. The MIT grant above conveys no rights whatsoever in HEASoft, CALDB,
+XMM-Newton SAS, or any other third-party software, data, or trademarks, and
+nothing in this repository should be construed as such a grant or as an
+endorsement by their respective providers.
