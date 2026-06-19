@@ -1,0 +1,10 @@
+--- heasoft-6.35.1/heacore/heasoftpy/local-build.py
++++ heasoft-6.35.1/heacore/heasoftpy/local-build.py
+@@ -41,6 +41,6 @@
+         # call 'pip install'
+         subprocess.check_call([
+             sys.executable,
+-            "-m", "pip", "install", ".", "--no-deps", "-t", "build",
++            "-m", "pip", "install", ".", "--no-deps", "--no-build-isolation", "-t", "build",
+             "--log", "pip.log"
+         ] + (["-v"] if args.verbose else []))
