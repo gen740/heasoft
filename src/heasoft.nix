@@ -109,10 +109,18 @@ _: {
             preConfigure = ''
               export PYTHON=${heasoftPython.interpreter}
               export FC=${pkgs.gfortran}/bin/gfortran
-              export FCFLAGS="$FCFLAGS -O2 -w"
-              export CFLAGS="$CFLAGS -O2 -I${pkgs.xorgproto}/include -w"
-              export CXXFLAGS="$CXXFLAGS -O2 -std=c++14 -L${pkgs.libX11}/lib -w"
+              export FCFLAGS="$FCFLAGS -O2"
+              export CFLAGS="$CFLAGS -O2 -I${pkgs.xorgproto}/include"
+              export CXXFLAGS="$CXXFLAGS -O2 -std=c++14 -L${pkgs.libX11}/lib"
               export LDFLAGS="$LDFLAGS -L${mergedXlibs}/lib -L${lib.getLib pkgs.gfortran.cc}/lib -lgfortran -L${pkgs.openblas}/lib -lcblas"
+              # HEASoft's sub-makes ignore the *FLAGS above, so warnings still
+              # flood the log. NIX_CFLAGS_COMPILE is appended by the cc/gfortran
+              # wrapper to *every* compile, bypassing HEASoft's own flags, so use
+              # it to force-silence warnings. Also strip the C-only
+              # -fmacro-prefix-map that the Darwin wrapper otherwise leaks into
+              # gfortran (which warns it is not valid for Fortran).
+              filtered="$(printf '%s' "''${NIX_CFLAGS_COMPILE:-}" | sed -E 's/-fmacro-prefix-map=[^[:space:]]*//g')"
+              export NIX_CFLAGS_COMPILE="$filtered -w"
               unset MACOSX_DEPLOYMENT_TARGET
               cd BUILD_DIR
             '';
