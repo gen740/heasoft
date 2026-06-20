@@ -47,7 +47,13 @@ _: {
               url = heasoftSrc.url;
               sha256 = heasoftSrc.sha256;
             };
-            hardeningDisable = [ "all" ];
+            # Legacy C/Fortran sources trip -Werror=format-security and FORTIFY;
+            # keep those off. The remaining hardening (stackprotector, relro,
+            # bindnow, pic, strictoverflow, ...) builds cleanly and stays enabled.
+            hardeningDisable = [
+              "format"
+              "fortify"
+            ];
             nativeBuildInputs = with pkgs; [
               which
               inetutils
@@ -55,6 +61,7 @@ _: {
               ripgrep
               perl
               patchelf
+              gfortran
             ];
             patches = [
               ./heasoftpy-install.patch
@@ -63,8 +70,6 @@ _: {
             buildInputs =
               with pkgs;
               [
-                gcc
-                gfortran
                 curl.dev
                 readline
                 ncurses5
