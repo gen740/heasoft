@@ -17,7 +17,6 @@ _: {
         heasoft = pkgs.stdenv.mkDerivation (
           finalAttrs:
           let
-            # heasoft-url = import ./heasoft-url.nix;
             heasoftPython = (
               pkgs.python3.withPackages (
                 ps: with ps; [
@@ -41,14 +40,11 @@ _: {
             };
 
           in
-          rec {
+          {
+            pname = "heasoft";
             version = heasoftSrc.version;
-            name = "heasoft-${version}";
             src = pkgs.fetchurl {
-              # url = heasoftSrc.url;
-              urls = [
-                heasoftSrc.url
-              ];
+              url = heasoftSrc.url;
               sha256 = heasoftSrc.sha256;
             };
             hardeningDisable = [ "all" ];
@@ -64,7 +60,6 @@ _: {
               ./heasoftpy-install.patch
               ./xspec-model-copy-component-groups.patch
             ];
-            autoPatchelfIgnoreMissingDeps = [ "*" ];
             buildInputs =
               with pkgs;
               [
@@ -88,7 +83,7 @@ _: {
               substituteInPlace \
                 ftools/guis/fitsTcl/configure.in \
                 ftools/guis/fitsTcl/configure \
-                --replace "/usr/bin/curl-config" "curl-config"
+                --replace-fail "/usr/bin/curl-config" "curl-config"
               substituteInPlace BUILD_DIR/hwrap \
                 --replace-fail '/bin/ls' 'ls'
               substituteInPlace swift/xrt/tasks/xrtpipeline/xrtpipeline \
@@ -168,6 +163,20 @@ _: {
                 fi
               done < <(find "$out" -type f -print0)
             '';
+            meta = {
+              description = "Unified release of HEASARC's FTOOLS, XANADU (XSPEC/Xronos/Ximage) and FITSIO software";
+              homepage = "https://heasarc.gsfc.nasa.gov/docs/software/lheasoft/";
+              # HEASoft is freely available but is fetched from upstream at build
+              # time, not redistributed by this flake; its components carry their
+              # own terms. See the LICENSE file in this repository for details.
+              license = lib.licenses.free;
+              sourceProvenance = [ lib.sourceTypes.fromSource ];
+              platforms = [
+                "x86_64-linux"
+                "aarch64-darwin"
+                "x86_64-darwin"
+              ];
+            };
           }
         );
       };
